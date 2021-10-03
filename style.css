@@ -1,0 +1,16 @@
+h1,
+p {
+  font-family: Lato;
+}
+.label-required {
+  border-style: solid;
+  border-width: 1px;
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 10.998px;
+  line-height: 14px;
+  color: #e27c7c;
+  vertical-align: baseline;
+  white-space: nowrap;
+  font-style: 10px;
+}
