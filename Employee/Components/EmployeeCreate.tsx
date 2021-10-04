@@ -38,7 +38,14 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
     }
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.isEmployeeCreationCompleted === false &&
+      this.props.isEmployeeCreationCompleted === true
+    ) {
+      this.resetForm();
+    }
+  }
 
   IsValid = function () {
     return (
