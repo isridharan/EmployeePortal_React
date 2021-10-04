@@ -43,7 +43,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isEmployeeCreationCompleted === true) {
+    if (nextProps.isEmployeeCreationCompleted == true) {
       this.resetForm();
     }
   }
@@ -95,7 +95,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
         });
         break;
       case 'Age':
-        if (value === '') {
+        if (value === '' || value === null) {
           this.setState({
             Age: null,
           });
@@ -106,7 +106,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
         }
         break;
       case 'Salary':
-        if (value === '') {
+        if (value === '' || value === null) {
           this.setState((state) => ({
             Salary: {
               ...state.Salary,
