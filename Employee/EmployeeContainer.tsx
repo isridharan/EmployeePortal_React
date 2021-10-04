@@ -11,7 +11,7 @@ export default (props) => {
         <h2> Employee Portal </h2>
       </div>
       <div className="row">
-        <div>
+        <div className="col-sm-12">
           <Loader />
         </div>
       </div>

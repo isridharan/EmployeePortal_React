@@ -137,26 +137,6 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
     return (
       <div>
         <div className="form-group">
-          <div className="col-sm-12">
-            <input
-              onChange={(e) => this.handleChange('FirstName', e.target.value)}
-              onKeyPress={(event) => {
-                if (!/[a-z]/.test(event.key) && !/[A-Z]/.test(event.key)) {
-                  event.preventDefault();
-                }
-              }}
-              type="text"
-              name="FirstName"
-              value={this.state.FirstName}
-            />
-          </div>
-          {this.state.FirstName === '' && (
-            <div className="col-md-2">
-              <span className="label label-required">Required</span>
-            </div>
-          )}
-        </div>
-        <div className="form-group">
           <span className="col-sm-2"> FirstName </span>
           <div className="col-sm-4">
             <input

@@ -7,7 +7,11 @@ class Loader extends React.Component<any, any> {
     super(props);
   }
   render() {
-    return <div>{this.props.isLoading && <span>Loading........</span>}</div>;
+    return (
+      <div className="text-center">
+        {this.props.isLoading && <span>Processing........</span>}
+      </div>
+    );
   }
 }
 let mapStateToProps = (state) => {
