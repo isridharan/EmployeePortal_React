@@ -5,7 +5,7 @@ export enum MessageType {
 }
 
 export const checkForAlphabets = function (value) {
-  return value.match('[a-zA-Z]');
+  return /^[a-z]+$/i.test(value);
 };
 
 export const formatCurrency = (amount: number, currency: string) =>
