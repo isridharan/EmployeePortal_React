@@ -1,7 +1,7 @@
 import * as React from 'react';
-import EmployeeDisplay from '../Employee/Components/EmployeeDisplay';
+import EmployeeDisplay from '../Employee/Components/EmployeeGrid';
 import EmployeeCreate from './Components/EmployeeCreate';
-import EmployeeDashboard from './Components/EmployeeDashboard';
+import EmployeeDashboard from './Components/EmployeeCounter';
 
 export default (props) => {
   return (
