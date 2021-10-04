@@ -7,7 +7,7 @@ export interface IAddress {
 }
 
 export interface ISalary {
-  Amount: number;
+  Amount: string;
   Currency: string;
   CurrencyName: string;
 }
@@ -18,6 +18,6 @@ export interface IEmployee {
   LastName: string;
   Role: string;
   RoleName: string;
-  Age: number;
+  Age: string;
   Salary: ISalary;
 }
