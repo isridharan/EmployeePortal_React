@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import { getLookup, createEmployee } from '../action';
 import { IEmployee } from '../Employee';
-import { MessageType, checkForAlphabets } from '../../Common/Common';
+import {
+  MessageType,
+  checkForAlphabets,
+  checkForNumber,
+} from '../../Common/Common';
 
 export interface IEmployeeCreateState extends IEmployee {
   errors: { message: string; type: MessageType }[];
@@ -17,8 +21,8 @@ const initialState = {
   LastName: '',
   Role: '',
   RoleName: '',
-  Age: 0,
-  Salary: { Amount: 0, Currency: '', CurrencyName: '' },
+  Age: null,
+  Salary: { Amount: null, Currency: '', CurrencyName: '' },
   errors: [],
   isProcessing: false,
 };
@@ -51,10 +55,10 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
       this.state.FirstName !== '' &&
       this.state.LastName !== '' &&
       this.state.Role !== '' &&
-      this.state.Age !== 0 &&
+      this.state.Age !== null &&
       this.state.Age >= 15 &&
       this.state.Age <= 80 &&
-      this.state.Salary.Amount !== 0 &&
+      this.state.Salary.Amount !== null &&
       this.state.Salary.Currency !== ''
     );
   };
@@ -93,12 +97,11 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
       case 'Age':
         if (value === '') {
           this.setState({
-            Age: 0,
+            Age: null,
           });
         } else {
-          var age = parseInt(value);
           this.setState({
-            Age: age,
+            Age: value,
           });
         }
         break;
@@ -107,7 +110,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
           this.setState((state) => ({
             Salary: {
               ...state.Salary,
-              Amount: 0,
+              Amount: null,
             },
           }));
         } else {
@@ -223,14 +226,18 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
               value={this.state.Age}
             />
           </div>
-          {this.state.Age == 0 && (
+          {this.state.Age == null && (
             <div className="col-md-2">
               <span className="label label-required">Required</span>
             </div>
           )}
-          <div className="col-md-12 small text-info">
-            <i>Age between (15-80 Years)</i>
-          </div>
+          {(this.state.Age < 20 || this.state.Age > 70) && (
+            <div className="col-md-2">
+              <span className="label label-required">
+                Age between (20-70 Years)
+              </span>
+            </div>
+          )}
         </div>
         <div className="form-group">
           <span className="col-sm-2"> Salary </span>
@@ -242,7 +249,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
               value={this.state.Salary.Amount}
             />
           </div>
-          {this.state.Salary.Amount == 0 && (
+          {this.state.Salary.Amount == null && (
             <div className="col-md-2">
               <span className="label label-required">Required</span>
             </div>
