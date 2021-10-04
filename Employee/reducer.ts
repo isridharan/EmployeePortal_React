@@ -56,6 +56,7 @@ export const employeeReducer = (state = initState, action) => {
       return {
         ...state,
         IsEmployeeCreationSuccessful: true,
+        IsLoading: false,
         Employees: [...state.Employees, action.payload.data],
         Messages: [
           ...state.Messages,
