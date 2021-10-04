@@ -142,7 +142,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
             <input
               onChange={(e) => this.handleChange('FirstName', e.target.value)}
               onKeyPress={(event) => {
-                if (!/[a-z]/.test(event.key)) {
+                if (!/[a-z]/.test(event.key) && !/[A-Z]/.test(event.key)) {
                   event.preventDefault();
                 }
               }}
@@ -163,7 +163,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
             <input
               onChange={(e) => this.handleChange('LastName', e.target.value)}
               onKeyPress={(event) => {
-                if (!/[a-z]/.test(event.key)) {
+                if (!/[a-z]/.test(event.key) && !/[A-Z]/.test(event.key)) {
                   event.preventDefault();
                 }
               }}
