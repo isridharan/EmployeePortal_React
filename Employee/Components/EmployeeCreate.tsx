@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import { getLookup, createEmployee } from '../action';
 import { IEmployee } from '../Employee';
-import {
-  MessageType,
-  checkForAlphabets,
-  checkForNumber,
-} from '../../Common/Common';
+import { MessageType } from '../../Common/Common';
 
 export interface IEmployeeCreateState extends IEmployee {
   errors: { message: string; type: MessageType }[];
@@ -21,8 +17,8 @@ const initialState = {
   LastName: '',
   Role: '',
   RoleName: '',
-  Age: null,
-  Salary: { Amount: null, Currency: '', CurrencyName: '' },
+  Age: '',
+  Salary: { Amount: '', Currency: '', CurrencyName: '' },
   errors: [],
   isProcessing: false,
 };
@@ -42,12 +38,6 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isEmployeeCreationCompleted == true) {
-      this.resetForm();
-    }
-  }
-
   componentDidUpdate() {}
 
   IsValid = function () {
@@ -64,24 +54,20 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
   };
 
   resetForm() {
-    this.setState({ ...initialState });
+    this.setState(initialState);
   }
 
   handleChange(name: string, value: any) {
     switch (name) {
       case 'FirstName':
-        if (checkForAlphabets(value) || value === '') {
-          this.setState({
-            FirstName: value,
-          });
-        }
+        this.setState({
+          FirstName: value,
+        });
         break;
       case 'LastName':
-        if (checkForAlphabets(value) || value === '') {
-          this.setState({
-            LastName: value,
-          });
-        }
+        this.setState({
+          LastName: value,
+        });
         break;
       case 'Role':
         var role = _.findWhere(this.props.lookups.Roles, {
@@ -95,32 +81,17 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
         });
         break;
       case 'Age':
-        if (value === '' || value === null) {
-          this.setState({
-            Age: null,
-          });
-        } else {
-          this.setState({
-            Age: value,
-          });
-        }
+        this.setState({
+          Age: value,
+        });
         break;
       case 'Salary':
-        if (value === '' || value === null) {
-          this.setState((state) => ({
-            Salary: {
-              ...state.Salary,
-              Amount: null,
-            },
-          }));
-        } else {
-          this.setState((state) => ({
-            Salary: {
-              ...state.Salary,
-              Amount: value,
-            },
-          }));
-        }
+        this.setState((state) => ({
+          Salary: {
+            ...state.Salary,
+            Amount: value,
+          },
+        }));
         break;
       case 'Currency':
         var currency = _.findWhere(this.props.lookups.Currency, {
@@ -163,6 +134,11 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
           <div className="col-sm-4">
             <input
               onChange={(e) => this.handleChange('FirstName', e.target.value)}
+              onKeyPress={(event) => {
+                if (!/[a-z]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
               type="text"
               name="FirstName"
               value={this.state.FirstName}
@@ -179,6 +155,11 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
           <div className="col-sm-4">
             <input
               onChange={(e) => this.handleChange('LastName', e.target.value)}
+              onKeyPress={(event) => {
+                if (!/[a-z]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
               type="text"
               name="LastName"
               value={this.state.LastName}
@@ -221,17 +202,22 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
               onChange={(e) =>
                 this.handleChange.bind(this)('Age', e.target.value)
               }
-              type="number"
+              onKeyPress={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+              type="text"
               name="Age"
               value={this.state.Age}
             />
           </div>
-          {this.state.Age == null && (
+          {this.state.Age === '' && (
             <div className="col-md-2">
               <span className="label label-required">Required</span>
             </div>
           )}
-          {(this.state.Age < 20 || this.state.Age > 70) && (
+          {(parseInt(this.state.Age) < 20 || parseInt(this.state.Age) > 70) && (
             <div className="col-md-2">
               <span className="label label-required">
                 Age between (20-70 Years)
@@ -244,12 +230,17 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
           <div className="col-sm-6">
             <input
               onChange={(e) => this.handleChange('Salary', e.target.value)}
-              type="number"
+              onKeyPress={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+              type="text"
               name="Salary"
               value={this.state.Salary.Amount}
             />
           </div>
-          {this.state.Salary.Amount == null && (
+          {this.state.Salary.Amount === '' && (
             <div className="col-md-2">
               <span className="label label-required">Required</span>
             </div>
@@ -280,7 +271,7 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
           )}
         </div>
         <div className="form-group">
-          <div className="col-sm-2">
+          <div className="col-sm-4">
             <button
               disabled={!this.IsValid()}
               className="btn btn-success"
@@ -288,6 +279,14 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
               onClick={this.handleSave}
             >
               Save
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={this.resetForm}
+            >
+              Reset
             </button>
           </div>
           {!this.IsValid() && (
