@@ -53,8 +53,8 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
       this.state.LastName !== '' &&
       this.state.Role !== '' &&
       this.state.Age !== null &&
-      this.state.Age >= 15 &&
-      this.state.Age <= 80 &&
+      this.state.Age >= 20 &&
+      this.state.Age <= 70 &&
       this.state.Salary.Amount !== null &&
       this.state.Salary.Currency !== ''
     );
@@ -142,14 +142,22 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
             <input
               onChange={(e) => this.handleChange('FirstName', e.target.value)}
               onKeyPress={(event) => {
-                if (!/[a-z]/.test(event.key) && !/[A-Z]/.test(event.key)) {
+                if (!/^[a-zA-Z\s]*$/.test(event.key)) {
                   event.preventDefault();
                 }
               }}
+              maxLength={50}
               type="text"
               name="FirstName"
               value={this.state.FirstName}
             />
+          </div>
+          <div className="col-md-6">
+            <i>
+              <span className="small text-info">
+                Maximum allowed length: 50
+              </span>
+            </i>
           </div>
           {this.state.FirstName === '' && (
             <div className="col-md-2">
@@ -163,14 +171,22 @@ class EmployeeCreate extends React.Component<any, IEmployeeCreateState> {
             <input
               onChange={(e) => this.handleChange('LastName', e.target.value)}
               onKeyPress={(event) => {
-                if (!/[a-z]/.test(event.key) && !/[A-Z]/.test(event.key)) {
+                if (!/^[a-zA-Z\s]*$/.test(event.key)) {
                   event.preventDefault();
                 }
               }}
+              maxLength={50}
               type="text"
               name="LastName"
               value={this.state.LastName}
             />
+          </div>
+          <div className="col-md-6">
+            <i>
+              <span className="small text-info">
+                Maximum allowed length: 50
+              </span>
+            </i>
           </div>
           {this.state.LastName === '' && (
             <div className="col-md-2">
